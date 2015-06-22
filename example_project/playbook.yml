@@ -1,0 +1,26 @@
+---
+- hosts: all
+
+  tasks:
+    #- name: update apt cache
+    #  sudo: true
+    #  apt: update_cache=yes
+
+    - name: install basic apt packages
+      sudo: true
+      apt: name={{ item }} state=present
+      with_items:
+        - python-dev
+        - python-pip
+
+    - name: install pip requirements
+      sudo: true
+      pip: name={{ item }}
+      with_items:
+        - django==1.8
+        - python-upwork==1.0
+
+    - name: set in place db schema
+      django_manage:
+        app_path=/vagrant/example_project
+        command=syncdb

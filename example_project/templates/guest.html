@@ -1,0 +1,19 @@
+<html>
+<meta charset="utf-8">
+<title>Guest page</title>
+<body>
+  <h1>Guest page</h1>
+  {% if configured %}
+    <p>
+    <a href="{% url "upwork_oauth_login" %}?next={% url "member_page" %}">
+      Log in via Upwork
+    </a>
+  {% else %}
+    <p>
+    Please make sure to specify your Upwork OAuth key and secret
+    (see example_project/settings.py).
+
+    <p>
+    Visit <a href="https://www.upwork.com/services/api/apply">Upwork</a>
+    to apply for an API key if you don't have one yet.
+  {% endif %}

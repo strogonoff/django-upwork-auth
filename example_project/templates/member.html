@@ -1,0 +1,10 @@
+<html>
+<meta charset="utf-8">
+<title>Member page</title>
+<body>
+  <h1>Member page</h1>
+  <p>Welcome, {{ user.first_name }}!
+  <p>You’re now logged in—django-upwork-auth must be working.
+  <p>Your access key is {{ token }}.
+
+  <p><a href="{% url "logout" %}">Log out</a>
