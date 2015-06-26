@@ -189,9 +189,8 @@ Specific to stock authentication backend
 These are relevant unless you subclass stock ``backends.UpworkOAuthBackend`` and override
 some of its logic.
 
-By default anyone can log in, given Upwork returns "active" as their account status.
-Whitelist mode can be turned on by filling ``UPWORK_AUTH_WHITELISTED_USERS`` and/or
-``UPWORK_AUTH_WHITELISTED_TEAMS``.
+By default anyone can log in. Whitelist mode can be turned on by assigning non-empty tuple
+to ``UPWORK_AUTH_WHITELIST`` or ``UPWORK_AUTH_TEAM_WHITELIST`` setting.
 
 UPWORK_AUTH_AUTO_CREATE_USERS = False
   Whether to create a new account in Django if given user uses Upwork login
