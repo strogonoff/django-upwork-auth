@@ -1,12 +1,7 @@
 django-upwork-auth
 ==================
 
-Simple Upwork login for your Django-based project.
-
-Note: at current version it has inflexible and impossible to disable access control.
-It suits my own needs so far but I plan to improve on this, given demand.
-
-Tested with Django 1.8 (see example project).
+Simple Upwork login for your app. Tested with Django 1.8 (see example project).
 
 Before oDesk rebranded as Upwork, this library was called django-odesk-auth.
 The latest version of django-odesk-auth works with Upwork already.
