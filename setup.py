@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-upwork-auth',
-    version='1.0-dev',
+    version='1.0-beta',
     packages=['django_upwork_auth'],
     include_package_data=True,
     license='BSD License',
