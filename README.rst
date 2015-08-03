@@ -9,7 +9,7 @@ This library is not backwards compatible with django-odesk-auth.
 
 
 Creating Upwork OAuth API key
-----------------------------
+-----------------------------
 
 Go to https://www.upwork.com/services/api/apply.
 
