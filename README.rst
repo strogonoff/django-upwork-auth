@@ -58,8 +58,8 @@ Requirements: Vagrant, Ansible, and free 8000 port.
 First, fill in the necessary settings in ``example_project/settings.py``
 (see comments in the file).
 
-From ``example_project`` directory, bring up a VM using Vagrantfile provided
-and manually run Django development server in it::
+From ``example_project`` directory, bring up a VM using the Vagrantfile provided
+and manually run Django development server inside::
 
     $ vagrant up
     $ vagrant ssh
@@ -78,7 +78,7 @@ When someone logs in, if their Upwork ID matches existing username, it logs
 them in as that user. If there's no username matching given Upwork ID, it optionally
 creates a user with such username.
 
-ATTENTION: Watch out you are using other authentication methods
+ATTENTION: Watch out if you are using other authentication methods
 or for some reason have any chance of one end user's Upwork ID matching
 existing username of another end user!
 
