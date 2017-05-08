@@ -1,0 +1,8 @@
+title: django-upwork-auth
+description: Simple Upwork login for your Django-based project.
+google_analytics: UA-24538431-1
+show_downloads: true
+theme: jekyll-theme-midnight
+
+gems:
+  - jekyll-mentions
