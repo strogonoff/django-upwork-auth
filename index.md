@@ -39,7 +39,7 @@ Make sure you have Django's ``sites`` and ``session`` frameworks enabled.
 5. Include ``django_upwork_auth.urls`` in your URL patterns.
 
 6. In your login page template, put a link (say, "Log in via Upwork")
-   and point it to ``{% url "upwork_oauth_login" %}``.
+   and point it to {% raw %}``{% url "upwork_oauth_login" %}``{% endraw %}.
 
 7. Open login page and click "Log in via Upwork" to verify everything works.
 
