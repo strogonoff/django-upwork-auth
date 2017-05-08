@@ -1,6 +1,3 @@
-django-upwork-auth
-==================
-
 Simple Upwork login for your app. Tested with Django 1.8 (see example project).
 
 Before oDesk rebranded as Upwork, this library was called django-odesk-auth.
@@ -8,8 +5,7 @@ The latest version of django-odesk-auth works with Upwork already.
 This library is not backwards compatible with django-odesk-auth.
 
 
-Creating Upwork OAuth API key
------------------------------
+## Creating Upwork OAuth API key
 
 Go to https://www.upwork.com/services/api/apply.
 
@@ -19,8 +15,7 @@ Go to https://www.upwork.com/services/api/apply.
   "View the structure of your companies/teams" permission to be checked.
 
 
-Adding Upwork auth to your Django project
------------------------------------------
+## Adding Upwork auth to your Django project
 
 Make sure you have ``django-upwork-auth`` and ``python-upwork==1.0`` installed.
 Make sure you have Django's ``sites`` and ``session`` frameworks enabled.
@@ -52,8 +47,7 @@ in a file that is not under version control. One way to do that:
 * In the beginning of ``settings.py``, have ``from settings_base import *``
 
 
-Example project
----------------
+## Example project
 
 Requirements: Vagrant, Ansible, and free 8000 port.
 
@@ -61,7 +55,7 @@ First, fill in the necessary settings in ``example_project/settings.py``
 (see comments in the file).
 
 From ``example_project`` directory, bring up a virtual machine
-using the Vagrantfile provided, and manually run Django development server inside::
+using the Vagrantfile provided, and manually run Django development server inside:
 
     $ vagrant up
     $ vagrant ssh
@@ -72,8 +66,7 @@ On your host machine, navigate to 127.0.0.1:8000 where you should be able
 to test Upwork login functionality in action.
 
 
-Authentication backend
-----------------------
+## Authentication backend
 
 Stock authentication backend assumes that you only use Upwork login in your app.
 When someone logs in, if their Upwork ID matches existing username, it logs
@@ -94,14 +87,16 @@ staff and/or superuser statuses. This is configured through Django settings.
 If whitelisting is on and given user is not on the white list, their
 ``User.is_active`` flag gets set to False upon login.
 
-See below for settings provided by stock authentication backend.
+**IMPORTANT:**
+By default authentication backend lets anyone log in via Upwork.
+
+See below all settings provided by stock authentication backend.
 
 You can subclass stock authentication backend to override user manipulation
 (see ``handle_unknown_user()`` and ``update_user()`` methods).
 
 
-Making authenticated Upwork API calls
--------------------------------------
+## Making authenticated Upwork API calls
 
 After user is successfully authenticated you can call Upwork API on their behalf.
 For that you'd need the access token obtained during OAuth flow.
@@ -113,15 +108,15 @@ and customized via ``UPWORK_OAUTH_ACCESS_TOKEN_SESSION_KEY`` setting.
 
 Example code you can have in your view::
 
-.. code:: python
+```python
+from django_upwork_auth import utils, settings
 
-    from django_upwork_auth import utils, settings
+upwork_client = utils.get_client(
+    request.session[settings.ACCESS_TOKEN_SESSION_KEY])
 
-    upwork_client = utils.get_client(
-        request.session[settings.ACCESS_TOKEN_SESSION_KEY])
-
-    print upwork_client.hr.get_teams()
-    # Should output list of teamrooms current user belongs to
+print upwork_client.hr.get_teams()
+# Should output list of teamrooms current user belongs to
+```
 
 You can use another storage technique by overriding
 ``UPWORK_OAUTH_ACCESS_TOKEN_STORE_FUNC``. It's useful if you need to make Upwork API call
@@ -138,40 +133,39 @@ Note:
   Handy if you're using python-upwork library to make API calls.
 
 
-Verifying OAuth access token
-----------------------------
+## Verifying OAuth access token
 
-Sometimes there's a need to make sure that current user's authentication
-is still valid—that they, for example, didn't revoke access to their account.
+If you want to periodically check whether current user's authentication
+is still valid, this Django app provides a helper for that:
+``utils.check_login()``.
 
-This app provides a helper for that: see ``utils.check_login()``.
-It can be used in a view like this::
+It can be used in a view like this:
 
-.. code:: python
+```python
 
-    from django_upwork_auth import utils
+from django_upwork_auth import utils
 
-    def oauth_check_login(request):
-        u"""Verifies OAuth access token and user status on Upwork.
-        Returns HTTP 200 (OK) or HTTP 401 (Unauthorized)
-        with additional information in response body text.
-        """
-        access_token = utils.access_token.get(request)
+def oauth_check_login(request):
+    u"""Verifies OAuth access token and user status on Upwork.
+    Returns HTTP 200 (OK) or HTTP 401 (Unauthorized)
+    with additional information in response body text.
+    """
+    access_token = utils.access_token.get(request)
 
-        if access_token is None or len(access_token) != 2:
-            return http.HttpResponse(
-                u"Bad or missing Upwork OAuth access token", status=401)
+    if access_token is None or len(access_token) != 2:
+        return http.HttpResponse(
+            u"Bad or missing Upwork OAuth access token", status=401)
 
-        result, details = utils.check_login(access_token)
+    result, details = utils.check_login(access_token)
 
-        if result is True:
-            return http.HttpResponse(details, status=200)
-        else:
-            return http.HttpResponse(details, status=401)
+    if result is True:
+        return http.HttpResponse(details, status=200)
+    else:
+        return http.HttpResponse(details, status=401)
+```
 
 
-Available Django settings
--------------------------
+## Important Django settings
 
 UPWORK_OAUTH_KEY, UPWORK_OAUTH_SECRET
   API key information.
@@ -187,14 +181,10 @@ UPWORK_AUTH_ACCESS_TOKEN_STORE_FUNC
   Default implementation stores token in session under ``ACCESS_TOKEN_SESSION_KEY``.
 
 
-Specific to stock authentication backend
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Settings specific to stock backend
 
-These are relevant unless you subclass stock ``backends.UpworkOAuthBackend`` and override
-some of its logic.
-
-By default anyone can log in. Whitelist mode can be turned on by assigning non-empty tuple
-to ``UPWORK_AUTH_WHITELIST`` or ``UPWORK_AUTH_TEAM_WHITELIST`` setting.
+These are relevant unless you subclass the provided
+``backends.UpworkOAuthBackend`` and override some of its logic.
 
 UPWORK_AUTH_AUTO_CREATE_USERS = False
   Whether to create a new account in Django if given user uses Upwork login
