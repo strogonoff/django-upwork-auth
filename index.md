@@ -167,18 +167,24 @@ def oauth_check_login(request):
 
 ## Important Django settings
 
-UPWORK_OAUTH_KEY, UPWORK_OAUTH_SECRET
+Default values shown where appopriate.
+
+* UPWORK_OAUTH_KEY, UPWORK_OAUTH_SECRET
+
   API key information.
 
-UPWORK_AUTH_LOGIN_REDIRECT_URL = settings.LOGIN_REDIRECT_URL
+* UPWORK_AUTH_LOGIN_REDIRECT_URL = settings.LOGIN_REDIRECT_URL
+
   Where to redirect the user at the end of OAuth flow.
   Path or URL pattern name.
 
-UPWORK_AUTH_ACCESS_TOKEN_STORE_FUNC
+* UPWORK_AUTH_ACCESS_TOKEN_STORE_FUNC
+
   Function to be called to store OAuth access token for future access.
   It's passed two arguments: a request where user is already
   authenticated and the access token associated with that user.
-  Default implementation stores token in session under ``ACCESS_TOKEN_SESSION_KEY``.
+  Default implementation stores token in session under
+  ``settings.ACCESS_TOKEN_SESSION_KEY``.
 
 
 ### Settings specific to stock backend
@@ -186,24 +192,31 @@ UPWORK_AUTH_ACCESS_TOKEN_STORE_FUNC
 These are relevant unless you subclass the provided
 ``backends.UpworkOAuthBackend`` and override some of its logic.
 
-UPWORK_AUTH_AUTO_CREATE_USERS = False
+* UPWORK_AUTH_AUTO_CREATE_USERS = False
+
   Whether to create a new account in Django if given user uses Upwork login
   for the first time (i.e., ID returned by Upwork is free in your Django DB).
 
-UPWORK_AUTH_WHITELIST = ()  
+* UPWORK_AUTH_WHITELIST = ()
+
   Upwork IDs of users who are allowed to log in via Upwork.
 
-UPWORK_AUTH_STAFF_WHITELIST = ()  
+* UPWORK_AUTH_STAFF_WHITELIST = ()
+
   Upwork IDs of users who are marked as ``is_staff`` upon login.
 
-UPWORK_AUTH_SUPERUSER_WHITELIST = ()  
+* UPWORK_AUTH_SUPERUSER_WHITELIST = ()
+
   Upwork IDs of users who are marked as ``is_superuser`` upon login.
 
-UPWORK_AUTH_TEAM_WHITELIST = ()  
+* UPWORK_AUTH_TEAM_WHITELIST = ()
+
   IDs of Upwork teamrooms, members of which are allowed to log in via Upwork.
 
-UPWORK_AUTH_STAFF_TEAM_WHITELIST = ()  
+* UPWORK_AUTH_STAFF_TEAM_WHITELIST = ()
+
   IDs of Upwork teamrooms, members of which are marked as ``is_staff`` upon login.
 
-UPWORK_AUTH_SUPERUSER_TEAM_WHITELIST = ()  
+* UPWORK_AUTH_SUPERUSER_TEAM_WHITELIST = ()
+
   IDs of Upwork teamrooms, members of which are marked as ``is_superuser`` upon login.
