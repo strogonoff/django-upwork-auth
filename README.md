@@ -1,8 +1,10 @@
 Simple Upwork login for your app. Tested with Django 1.8 (see example project).
 
-Before oDesk rebranded as Upwork, this library was called django-odesk-auth.
+If there’s interest, migration to latest Django is on the table.
+
+(Before oDesk rebranded as Upwork, this library was called django-odesk-auth.
 The latest version of django-odesk-auth works with Upwork already.
-This library is not backwards compatible with django-odesk-auth.
+This library is not backwards compatible with django-odesk-auth.)
 
 
 ## Creating Upwork OAuth API key
